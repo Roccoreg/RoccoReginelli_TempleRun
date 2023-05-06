@@ -1,44 +1,63 @@
 # File created by Rocco Reginelli
 
-import pygame
+import pygame as pg
+import random
+from settings import *
 
-pygame.init()
+class Game: 
+    def __init__(self):
+        # initialize game window, etc
+        pg.init()
+        pg.mixer.init()
+        self.screen = pg.display.set_mode ((WIDTH, HEIGHT))
+        pg.display.set_caption(TITLE)
+        self.clock = pg.time.Clock()
+        self.running = True
 
-# Library of game contants
-White = (255, 255, 255)
-black = (0, 0, 0)
-gray = (128, 128, 128)
-WIDTH = 400
-HEIGHT = 500
-background = White
-player = pygame.transform.scale(pygame.image.load('doodle.png'), (90,70))
-fps = 60
-font = pygame.font.Font('freesansbold.ttf', 16)
-timer = pygame.time.Clock()
+    def new(self):
+        # start a new game
+        self.all_sprites = pg.sprite.Group()
+        self.run()
+    
+    def run(self):
+        # Game Loop
+        self.playing = True
+        while self.playing:
+            self.clock.tick(FPS)
+            self.events()
+            self.update()
+            self.draw()
 
-# Game variables
-player_x = 170
-player_y = 400
-platforms = {[175, 480, 70, 10]}
-# create screen
-screen = pygame.display.set_mode([WIDTH, HEIGHT])
-pygame.display.set_caption('Doodle Jumper')
+    def update(self):
+        # Game Loop - update
+        self.all_sprites.update()
 
-running = True
-while running == True:
-    timer.tick(fps)
-    screen.fill(background)
-    screen.blit(player, (player_x, player_y))
-    blocks = []
+    def events(self):
+        # Game Loop - events
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                if self.playing:
+                    self.playing = False
+                self.running = False
+        
+    def draw(self):
+        # Game loop
+        self.screen.fill(BLACK)
+        self.all_sprites.draw(self.screen)
+        pg.display.flip()
 
-    for i in range(len(platforms)):
-        block = pygame.dra.rect(screen, black, platforms[i])
-blocks.append(block)
+    def show_start_screen(self):
+        # game splash/start screen
+        pass
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    def show_go_screen(self):
+        # game over/continue
+        pass
 
-    pygame.display.flip()
-pygame.quit
+g = Game()
+g.show_start_screen()
+while g.running:
+    g.new()
+    g.show_go_screen()
 
+pg.quit()
