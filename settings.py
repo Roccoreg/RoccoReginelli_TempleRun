@@ -5,7 +5,7 @@ HEIGHT = 600
 FPS = 60
 
 # Payer properties
-PLAYER_ACC = 0.5
+PLAYER_ACC = 0.6
 PLAYER_FRICTION = -0.12
 PLAYER_GRAV = 0.8
 # starting platforms

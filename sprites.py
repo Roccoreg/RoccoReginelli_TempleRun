@@ -18,7 +18,7 @@ class Player(pg.sprite.Sprite):
     def jump(self):
         # jump only standing on a platform
         self.rect.x += 1
-        hits = pg.sprtie.sprtiecollide(self, self.game.platforms, False)
+        hits = pg.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.x -= 1
         if hits:
             self.vel.y = -20
