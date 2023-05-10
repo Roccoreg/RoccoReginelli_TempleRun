@@ -7,8 +7,10 @@ class Player(pg.sprite.Sprite):
     def __init__(self, game):
         pg.sprite.Sprite.__init__(self)
         self.game = game
-        self.image = pg.Surface((30, 40))
-        self.image.fill(YELLOW)
+        self.image = pg.transform.scale(self.game.player_img, (40, 40))
+        self.image.set_colorkey(WHITE)
+        #self.image = pg.Surface((30, 40))
+        # self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
         self.pos = vec(WIDTH / 2, HEIGHT / 2)
@@ -50,3 +52,4 @@ class Platform(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+

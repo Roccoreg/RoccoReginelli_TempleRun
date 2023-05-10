@@ -1,9 +1,14 @@
 # File created by Rocco Reginelli
 
 import pygame as pg
+import os
 import random
 from settings import *
 from sprites import *
+from os import path
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, "img")
+
 class Game: 
     def __init__(self):
         # initialize game window, etc
@@ -15,9 +20,13 @@ class Game:
         self.running = True
         self.font_name = pg.font.match_font(FONT_NAME)
 
+    def load_data(self):
+        self.player_img = pg.image.load(path.join(img_folder, "doodler.png")).convert()
+        
     def new(self):
         # start a new game
         self.score = 0
+        self.load_data()
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
         self.player = Player(self)
@@ -66,7 +75,7 @@ class Game:
             self.playing = False
 
            # spawn new platforms to keep same average number of platforms
-        while len(self.platforms) < 7:
+        while len(self.platforms) < 8:
             width = random.randrange(50, 100)
             p = Platform(random.randrange(0, WIDTH - width),
                          random.randrange(-75, -30),
