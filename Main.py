@@ -3,6 +3,7 @@
 import pygame as pg
 import os
 import random
+from random import randint
 from settings import *
 from sprites import *
 from os import path
@@ -19,22 +20,33 @@ class Game:
         self.clock = pg.time.Clock()
         self.running = True
         self.font_name = pg.font.match_font(FONT_NAME)
+        
 
     def load_data(self):
         self.player_img = pg.image.load(path.join(img_folder, "doodler.png")).convert()
+        self.coin_img= pg.image.load(path.join(img_folder, "coin.png")).convert()
         
     def new(self):
         # start a new game
         self.score = 0
+        self.score_coin = 0
         self.load_data()
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
+        self.coins = pg.sprite.Group()
         self.player = Player(self)
+        self.coin = Coin(self, WIDTH/2, HEIGHT/2)
         self.all_sprites.add(self.player)
+        self.all_sprites.add(self.coin)
+        self.coins.add(self.coin)
         for plat in PLATFORM_LIST:
             p = Platform(*plat)
             self.all_sprites.add(p)
             self.platforms.add(p)
+            if randint(0,1) > 0:
+                c = Coin(self, p.rect.x, p.rect.y)
+                self.all_sprites.add(c)
+                self.coins.add(c)
         self.run()
 
     def run(self):
@@ -63,6 +75,15 @@ class Game:
                 if plat.rect.top >= HEIGHT:
                     plat.kill()
                     self.score += 1
+            for c in self.coins:
+                c.rect.y += abs(self.player.vel.y)
+                if c.rect.top >= HEIGHT:
+                    c.kill()
+
+        coin_hits = pg.sprite.spritecollide(self.player, self.coins, True)
+        if coin_hits:
+            self.score_coin += 1
+            print(self.score_coin)            
 
         # If player dies
         if self.player.rect.bottom > HEIGHT:
@@ -81,6 +102,10 @@ class Game:
                          width, 20)
             self.platforms.add(p)
             self.all_sprites.add(p)
+            if randint(0,1) > 0:
+                c = Coin(self, p.rect.x, p.rect.y)
+                self.all_sprites.add(c)
+                self.coins.add(c)
 
     def events(self):
         # Game Loop - events
@@ -110,6 +135,10 @@ class Game:
         self.draw_text("Arrows to move, Space to Jump", 22, WHITE, WIDTH / 2, HEIGHT / 2)
         self.draw_text("Press a key to play", 22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
         self.draw_text("Collect the Coins", 22, WHITE, WIDTH / 2 , HEIGHT * 3 / 4 - 80)
+        self.draw_text("Game Score", 22, WHITE, WIDTH / 2 , HEIGHT / 2 - 250)
+        self.draw_text("__", 22, WHITE, WIDTH / 2 , HEIGHT / 2 - 280)
+        self.draw_text("__", 22, WHITE, WIDTH / 2 + 180 , HEIGHT / 2 - 280)
+        self.draw_text("Coin Score", 22, WHITE, WIDTH / 2 + 180 , HEIGHT / 2 - 250)
         pg.display.flip()
         self.wait_for_key()
 

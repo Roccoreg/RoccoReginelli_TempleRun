@@ -54,9 +54,11 @@ class Platform(pg.sprite.Sprite):
         self.rect.y = y
 
 class Coin(pg.sprite.Sprite):
-        def __init__(self, x, y):
-            pg.sprite.Sprite.__init__(self)
-            img = pg.image.load("coin.png")
-            self.image = pg.transform.scale(img, 40, 40)
-            self.rect.x = x
-            self.rect.y = y
+    def __init__(self, game, x, y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+        self.image = pg.transform.scale(self.game.coin_img, (40, 40))
+        self.image.set_colorkey(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
