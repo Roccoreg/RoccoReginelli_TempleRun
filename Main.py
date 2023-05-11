@@ -56,8 +56,8 @@ class Game:
                 self.player.pos.y = hits[0].rect.top
                 self.player.vel.y = 0
 
-        # if player reaches top 1/4 of screen
-        if self.player.rect.top <= HEIGHT / 4:
+        # if player reaches top 1/2 of screen then screen scrolls down revealing more blocks on the top
+        if self.player.rect.top <= HEIGHT / 2:
             self.player.pos.y += abs(self.player.vel.y)
             for plat in self.platforms:
                 plat.rect.y += abs(self.player.vel.y)
@@ -75,10 +75,10 @@ class Game:
             self.playing = False
 
            # spawn new platforms to keep same average number of platforms
-        while len(self.platforms) < 4:
+        while len(self.platforms) < 6:
             width = random.randrange(50, 100)
             p = Platform(random.randrange(0, WIDTH - width),
-                         random.randrange(-75, -30),
+                         random.randrange(-50, -30),
                          width, 20)
             self.platforms.add(p)
             self.all_sprites.add(p)

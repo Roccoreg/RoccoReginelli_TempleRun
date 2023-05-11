@@ -6,7 +6,7 @@ FPS = 60
 FONT_NAME = 'arial'
 
 # Payer properties
-PLAYER_ACC = 0.6
+PLAYER_ACC = 0.8
 PLAYER_FRICTION = -0.12
 PLAYER_GRAV = 0.8
 PLAYER_JUMP = 20
