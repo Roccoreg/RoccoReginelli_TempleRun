@@ -55,7 +55,6 @@ class Game:
             if hits:
                 self.player.pos.y = hits[0].rect.top
                 self.player.vel.y = 0
-
         # if player reaches top 1/2 of screen then screen scrolls down revealing more blocks on the top
         if self.player.rect.top <= HEIGHT / 2:
             self.player.pos.y += abs(self.player.vel.y)
@@ -65,7 +64,7 @@ class Game:
                     plat.kill()
                     self.score += 1
 
-    # If player dies
+        # If player dies
         if self.player.rect.bottom > HEIGHT:
             for sprite in self.all_sprites:
                 sprite.rect.y -= max(self.player.vel.y, 10)
@@ -99,6 +98,8 @@ class Game:
         self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
         self.draw_text(str(self.score), 22, WHITE, WIDTH / 2, 15)
+        self.draw_text(str(self.score_coin), 22, WHITE, WIDTH / 2 + 200, 15)
+        
         # flips the display
         pg.display.flip()
 
@@ -108,6 +109,7 @@ class Game:
         self.draw_text(TITLE, 48, WHITE, WIDTH / 2, HEIGHT / 4)
         self.draw_text("Arrows to move, Space to Jump", 22, WHITE, WIDTH / 2, HEIGHT / 2)
         self.draw_text("Press a key to play", 22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
+        self.draw_text("Collect the Coins", 22, WHITE, WIDTH / 2 , HEIGHT * 3 / 4 - 80)
         pg.display.flip()
         self.wait_for_key()
 
@@ -118,6 +120,7 @@ class Game:
         self.screen.fill(BGCOLOR)
         self.draw_text("GAME OVER", 48, WHITE, WIDTH / 2, HEIGHT / 4)
         self.draw_text("Score: " + str(self.score), 22, WHITE, WIDTH / 2, HEIGHT / 2)
+        self.draw_text("Coins Collected: " + str(self.score_coin), 22, WHITE, WIDTH / 2, HEIGHT / 2 - 40)
         self.draw_text("Press a key to play again", 22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
         pg.display.flip()
         self.wait_for_key()

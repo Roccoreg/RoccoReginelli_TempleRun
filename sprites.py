@@ -53,3 +53,10 @@ class Platform(pg.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
+class Coin(pg.sprite.Sprite):
+        def __init__(self, x, y):
+            pg.sprite.Sprite.__init__(self)
+            img = pg.image.load("coin.png")
+            self.image = pg.transform.scale(img, 40, 40)
+            self.rect.x = x
+            self.rect.y = y
