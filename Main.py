@@ -1,5 +1,14 @@
 # File created by Rocco Reginelli
-# (Kids can code) https://www.youtube.com/watch?v=9S7fWevICtY&list=PLsk-HSGFjnaG-BwZkuAOcVwWldfCLu1pq&index=13
+'''
+Goal: Create a doodle Jump game
+Create a coin method that the player can pick up
+Create a soundtrack and a sound once coins are picked up
+Reach Goal:
+Create a mob class
+Citations below
+'''
+#  https://www.youtube.com/watch?v=9S7fWevICtY&list=PLsk-HSGFjnaG-BwZkuAOcVwWldfCLu1pq&index=13 (Kids can code)
+# Mr. Cozort
 import pygame as pg
 import os
 import random
@@ -179,7 +188,6 @@ class Game:
         text_rect.midtop = (x, y)
         self.screen.blit(text_surface, text_rect)
         
-
 g = Game()
 g.show_start_screen()
 while g.running:
