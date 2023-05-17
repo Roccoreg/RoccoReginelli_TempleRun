@@ -38,10 +38,10 @@ class Game:
         self.platforms = pg.sprite.Group()
         self.coins = pg.sprite.Group()
         self.player = Player(self)
-        self.coin = Coin(self, WIDTH/2, HEIGHT/2)
+        # self.coin = Coin(self, WIDTH/2, HEIGHT/2)
         self.all_sprites.add(self.player)
-        self.all_sprites.add(self.coin)
-        self.coins.add(self.coin)
+        # self.all_sprites.add(self.coin)
+        # self.coins.add(self.coin)
         pg.mixer.music.load(path.join(snd_folder, "sound.mp3"))
         for plat in PLATFORM_LIST:
             p = Platform(*plat)
@@ -108,8 +108,9 @@ class Game:
                          width, 20)
             self.platforms.add(p)
             self.all_sprites.add(p)
+            # add new randomly placed coins when platforms are created
             if randint(0,1) > 0:
-                c = Coin(self, p.rect.x, p.rect.y)
+                c = Coin(self, p.rect.x-(randint(-70,70)), p.rect.y-(randint(-70,70)))
                 self.all_sprites.add(c)
                 self.coins.add(c)
 
