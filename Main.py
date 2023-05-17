@@ -9,6 +9,7 @@ from sprites import *
 from os import path
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, "img")
+snd_folder = os.path.join(game_folder, "sounds")
 
 class Game: 
     def __init__(self):
@@ -25,6 +26,8 @@ class Game:
     def load_data(self):
         self.player_img = pg.image.load(path.join(img_folder, "doodler.png")).convert()
         self.coin_img= pg.image.load(path.join(img_folder, "coin.png")).convert()
+        self.cheddy_sound= pg.mixer.Sound(path.join(snd_folder, "recording.mp3"))
+
         
     def new(self):
         # start a new game
@@ -39,6 +42,7 @@ class Game:
         self.all_sprites.add(self.player)
         self.all_sprites.add(self.coin)
         self.coins.add(self.coin)
+        pg.mixer.music.load(path.join(snd_folder, "sound.mp3"))
         for plat in PLATFORM_LIST:
             p = Platform(*plat)
             self.all_sprites.add(p)
@@ -51,6 +55,7 @@ class Game:
 
     def run(self):
         # Game Loop
+        pg.mixer.music.play(loops=-1)
         self.playing = True
         while self.playing:
             self.clock.tick(FPS)
@@ -83,6 +88,7 @@ class Game:
         coin_hits = pg.sprite.spritecollide(self.player, self.coins, True)
         if coin_hits:
             self.score_coin += 1
+            pg.mixer.Sound(self.cheddy_sound).play()
             print(self.score_coin)            
 
         # If player dies
